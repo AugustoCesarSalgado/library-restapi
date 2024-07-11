@@ -31,4 +31,8 @@ public class UserEntity {
     @Column(name = "credentials_non_expired")
     private boolean credentialsNonExpired;
 
+    @ManyToOne(targetEntity = RoleEntity.class)
+    @JoinColumn(name = "role_id")
+    private RoleEntity role;
+
 }
