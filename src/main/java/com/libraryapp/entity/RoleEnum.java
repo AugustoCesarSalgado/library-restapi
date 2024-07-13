@@ -1,4 +1,4 @@
-package com.libraryapp.persistence.entity;
+package com.libraryapp.entity;
 
 public enum RoleEnum {
 
