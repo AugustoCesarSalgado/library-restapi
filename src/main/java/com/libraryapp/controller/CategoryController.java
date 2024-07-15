@@ -3,7 +3,9 @@ package com.libraryapp.controller;
 import com.libraryapp.controller.dto.CategoryDTO;
 import com.libraryapp.entity.CategoryEntity;
 import com.libraryapp.service.ICategoryService;
+import org.aspectj.bridge.Message;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMessage;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -63,6 +65,22 @@ public class CategoryController {
                 .build());
 
         return new ResponseEntity<>(new URI("/library/category/save"), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateCategory(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO) {
+
+        Optional<CategoryEntity> categoryOptional = categoryService.findById(id);
+
+        if (categoryOptional.isPresent()) {
+            CategoryEntity category = categoryOptional.get();
+            category.setName(categoryDTO.getName());
+            categoryService.save(category);
+            return new ResponseEntity<>("Category updated", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
 }
