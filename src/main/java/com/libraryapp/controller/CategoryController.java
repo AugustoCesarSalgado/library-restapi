@@ -83,4 +83,14 @@ public class CategoryController {
 
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        if (id != null) {
+            categoryService.deleteById(id);
+            return new ResponseEntity<>("Category deleted", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
 }
