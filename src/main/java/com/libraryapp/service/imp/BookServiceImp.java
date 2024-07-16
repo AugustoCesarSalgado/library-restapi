@@ -3,6 +3,7 @@ package com.libraryapp.service.imp;
 import com.libraryapp.entity.BookEntity;
 import com.libraryapp.persistence.IBookDAO;
 import com.libraryapp.service.IBookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Optional;
 @Service
 public class BookServiceImp implements IBookService {
 
+    @Autowired
     private IBookDAO bookDAO;
 
     @Override
