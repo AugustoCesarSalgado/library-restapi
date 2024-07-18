@@ -59,7 +59,7 @@ public class LoanController {
 
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody LoanDTO loanDTO) throws URISyntaxException {
-        if (loanDTO.getLoanDate() == null || loanDTO.getReturnDate() == null || loanDTO.getBook() == null){
+        if (loanDTO.getLoanDate() == null || loanDTO.getReturnDate() == null || loanDTO.getBook() == null || loanDTO.getUser() == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -88,6 +88,16 @@ public class LoanController {
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        if (id != null) {
+            loanService.deleteById(id);
+            return new ResponseEntity<>("Loan deleted", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 }
