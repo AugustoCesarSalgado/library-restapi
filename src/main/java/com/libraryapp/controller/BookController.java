@@ -74,4 +74,22 @@ public class BookController {
 
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
+        Optional<BookEntity> bookOptional = bookService.findById(id);
+
+        if (bookOptional.isPresent()) {
+            BookEntity book = bookOptional.get();
+            book.setTitle(bookDTO.getTitle());
+            book.setAuthor(bookDTO.getAuthor());
+            book.setYear(bookDTO.getYear());
+            book.setCategory(bookDTO.getCategory());
+            bookService.save(book);
+
+            return new ResponseEntity<>("Book updated", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 }
