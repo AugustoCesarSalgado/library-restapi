@@ -1,7 +1,6 @@
 package com.libraryapp.controller;
 
 import com.libraryapp.controller.dto.LoanDTO;
-import com.libraryapp.entity.BookEntity;
 import com.libraryapp.entity.LoanEntity;
 import com.libraryapp.service.ILoanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,6 +55,24 @@ public class LoanController {
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<?> save(@RequestBody LoanDTO loanDTO) throws URISyntaxException {
+        if (loanDTO.getLoanDate() == null || loanDTO.getReturnDate() == null || loanDTO.getBook() == null || loanDTO.getUser() == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        LoanEntity loan = LoanEntity.builder()
+                .loanDate(loanDTO.getLoanDate())
+                .returnDate(loanDTO.getLoanDate())
+                .book(loanDTO.getBook())
+                .user(loanDTO.getUser())
+                .build();
+
+        loanService.save(loan);
+
+        return new ResponseEntity<>(new URI("/library/loan/save"), HttpStatus.CREATED);
     }
 
 }
