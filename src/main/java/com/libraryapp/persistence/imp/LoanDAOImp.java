@@ -4,6 +4,7 @@ import com.libraryapp.entity.BookEntity;
 import com.libraryapp.entity.LoanEntity;
 import com.libraryapp.persistence.ILoanDAO;
 import com.libraryapp.repository.LoanRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Optional;
 @Component
 public class LoanDAOImp implements ILoanDAO {
 
+    @Autowired
     private LoanRepository loanRepository;
 
     @Override
