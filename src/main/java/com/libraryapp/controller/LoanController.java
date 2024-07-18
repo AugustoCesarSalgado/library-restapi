@@ -46,7 +46,7 @@ public class LoanController {
             LoanDTO loanDTO = LoanDTO.builder()
                     .id(loan.getId())
                     .loanDate(loan.getLoanDate())
-                    .returnDate(loan.getLoanDate())
+                    .returnDate(loan.getReturnDate())
                     .book(loan.getBook())
                     .user(loan.getUser())
                     .build();
@@ -59,7 +59,7 @@ public class LoanController {
 
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody LoanDTO loanDTO) throws URISyntaxException {
-        if (loanDTO.getLoanDate() == null || loanDTO.getReturnDate() == null || loanDTO.getBook() == null || loanDTO.getUser() == null){
+        if (loanDTO.getLoanDate() == null || loanDTO.getReturnDate() == null || loanDTO.getBook() == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
@@ -73,6 +73,21 @@ public class LoanController {
         loanService.save(loan);
 
         return new ResponseEntity<>(new URI("/library/loan/save"), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable Long id,@RequestBody LoanDTO loanDTO) {
+        Optional<LoanEntity> loanOptional = loanService.findById(id);
+
+        if (loanOptional.isPresent()) {
+            LoanEntity loan = loanOptional.get();
+            loan.setReturnDate(loanDTO.getReturnDate());
+            loanService.save(loan);
+
+            return new ResponseEntity<>("Loan updated", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }
