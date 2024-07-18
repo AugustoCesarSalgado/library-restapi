@@ -92,4 +92,14 @@ public class BookController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @DeleteMapping("/delete/{id}") 
+    public ResponseEntity<?> deleteById(@PathVariable Long id) {
+        if (id != null) {
+            bookService.deleteById(id);
+            return new ResponseEntity<>("Book deleted", HttpStatus.OK);
+        }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
 }
