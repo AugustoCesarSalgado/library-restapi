@@ -21,7 +21,7 @@ public class CategoryEntity {
     private Long id;
     private String name;
 
-    @OneToMany(targetEntity = BookEntity.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonIgnore
     private List<BookEntity> books = new ArrayList<>();
 
