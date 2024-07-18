@@ -57,7 +57,7 @@ public class BookController {
 
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody BookDTO bookDTO) throws URISyntaxException {
-        if (bookDTO.getTitle().isBlank()) {
+        if (bookDTO.getTitle().isBlank() || bookDTO.getCategory() == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
