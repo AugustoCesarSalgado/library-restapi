@@ -3,6 +3,8 @@ package com.libraryapp.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Builder
@@ -31,8 +33,11 @@ public class UserEntity {
     @Column(name = "credentials_non_expired")
     private boolean credentialsNonExpired;
 
-    @ManyToOne(targetEntity = RoleEntity.class)
-    @JoinColumn(name = "role_id")
-    private RoleEntity role;
+    @ManyToMany(targetEntity = RoleEntity.class)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<RoleEntity> roles;
 
 }
